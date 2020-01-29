@@ -1,93 +1,71 @@
 const playerOne = 'X';
 const playerTwo = 'O';
 let playerTurn = 'X';
+let previousTurn = 'O';
 let squaresFilled = 0;
 
-let squares = {
+let squareX = {
+    1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '', 8: '', 9: '',
+}
+let squareY = {
     1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '', 8: '', 9: '',
 }
 
 function checkForWin() {
     //Sixteen possible ways to win
     //1
-    if (squares[1] === 'X' && squares[2] === 'X' && squares[3] === 'X') {
-        alert("Player X is the Winner");
-        reset();
+    if ((squareX[1] === 'X' && squareX[2] === 'X' && squareX[3] === 'X') || (squareY[1] === 'O' && squareY[2] === 'O' && squareY[3] === 'O')) {
+        //6
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //2
-    if (squares[1] === 'O' && squares[2] === 'O' && squares[3] === 'O') {
-        alert("Player X is the Winner");
-        reset();
+
+    if ((squareX[4] === 'X' && squareX[5] === 'X' && squareX[6] === 'X') || (squareY[4] === 'O' && squareY[5] === 'O' && squareY[6] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //3
-    if (squares[4] === 'O' && squares[5] === 'O' && squares[6] === 'O') {
-        alert("Player X is the Winner");
-        reset();
+    15
+
+    if ((squareX[1] === 'X' && squareX[4] === 'X' && squareX[7] === 'X') || (squareY[1] === 'O' && squareY[4] === 'O' && squareY[7] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //4
-    if (squares[4] === 'X' && squares[5] === 'X' && squares[6] === 'X') {
-        alert("Player X is the Winner");
-        reset();
+
+    if ((squareX[2] === 'X' && squareX[5] === 'X' && squareX[8] === 'X') || (squareY[2] === 'O' && squareY[5] === 'O' && squareY[8] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //5
-    if (squares[7] === 'O' && square[8] === 'O' && squares[9] === 'O') {
-        alert("Player X is the Winner");
-        reset();
+    if ((squareX[3] === 'X' && squareX[6] === 'X' && squareX[9] === 'X') || (squareY[3] === 'O' && squareY[6] === 'O' && squareY[9] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //6
-    if (squares[7] === 'X' && squares[8] === 'X' && squares[9] === 'X') {
-        alert("Player X is the Winner");
-        reset();
+    if ((squareX[1] === 'X' && squareX[5] === 'X' && squareX[9] === 'X') || (squareY[1] === 'O' && squareY[5] === 'O' && squareY[9] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //7
-    if (squares[1] === 'O' && squares[4] === 'O' && squares[7] === 'O') {
-        alert("Player X is the Winner");
-        reset();
+    if ((squareX[3] === 'X' && squareX[5] === 'X' && squareX[9] === 'X') || (squareY[3] === 'O' && squareY[5] === 'O' && squareY[9] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
-    //8
-    if (squares[1] === 'O' && squares[4] === 'O' && squares[7] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //9
-    if (squares[2] === 'O' && squares[5] === 'O' && squares[8] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //10
-    if (squares[2] === 'O' && squares[5] === 'O' && squares[8] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //11
-    if (squares[3] === 'O' && squares[6] === 'O' && squares[9] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //12
-    if (squares[3] === 'O' && squares[6] === 'O' && squares[9] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //13
-    if (squares[1] === 'O' && squares[5] === 'O' && squares[9] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //14
-    if (squares[1] === 'O' && squares[5] === 'O' && squares[9] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //15
-    if (squares[3] === 'O' && squares[5] === 'O' && squares[7] === 'O') {
-        alert("Player X is the Winner");
-        reset();
-    }
-    //16
-    if (squares[3] === 'O' && squares[5] === 'O' && squares[7] === 'O') {
-        alert("Player X is the Winner");
-        reset();
+    if ((squareX[7] === 'X' && squareX[8] === 'X' && squareX[9] === 'X') || (squareY[7] === 'O' && squareY[8] === 'O' && squareY[9] === 'O')) {
+        console.log(squareX)
+        console.log(squareY)
+        alert(previousTurn + " is the Winner");
+        window.location.reload();
     }
 }
 
@@ -106,21 +84,29 @@ function setSelection(val) {
     //Game should start at 'X'
     let value = val;
     //Use the Id val to change our HTML
-    if (document.getElementById(value).innerHTML === 'Click') {
-        document.getElementById(value).innerHTML = turn;
-        //Set it equal to the turn either 'X' or 'O'
-        squaresFilled++;
-        // checkForWin();
-        //Increment Squares Filled
-        if (turn === 'X') {
-            //Change between players
-            squares[value] = 'X'
+
+    // checkForWin();
+    //Increment Squares 
+
+    if (turn === 'X') {
+        //Change between players
+        squareX[value] = 'X'
+        if (document.getElementById(value).innerHTML === 'Click') {
+            document.getElementById(value).innerHTML = turn;
+            previousTurn = 'X'
             playerTurn = 'O'
+
             checkForWin();
         }
-        else (playerTurn = 'X')
-        squares[value] = 'O'
-        checkForWin();
+    }
+    if (turn === 'O') {
+        if (document.getElementById(value).innerHTML === 'Click') {
+            document.getElementById(value).innerHTML = turn;
+            squareY[value] = 'O'
+            previousTurn = 'O'
+            playerTurn = 'X'
+            checkForWin();
+        }
     }
 }
 
