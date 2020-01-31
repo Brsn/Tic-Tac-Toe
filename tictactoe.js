@@ -11,6 +11,11 @@ let aiPick = 0;
 let count = 1;
 let gameOver = false;
 
+//set the local storage to a variable so we can increment also needed to parse strings.
+let xWon = parseInt(localStorage.getItem("X"));
+let aiWon = parseInt(localStorage.getItem("Y"));
+let draw = parseInt(localStorage.getItem("draw"));
+
 let squareX = {
     1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '', 8: '', 9: '',
 }
@@ -19,7 +24,15 @@ let squareY = {
 }
 
 
-function checkahead() {
+document.getElementById("draw").innerHTML = localStorage.getItem("draw");
+document.getElementById("computerWins").innerHTML = localStorage.getItem("Y");
+document.getElementById("playerWins").innerHTML = localStorage.getItem("X");
+
+console.log(localStorage);
+
+
+
+function checkaheadX() {
     for (let i = 1; i <= 9; i++) {
         if (document.getElementById(i).innerHTML === 'Click') {
             squareX[i] = 'X';
@@ -29,11 +42,11 @@ function checkahead() {
             if (checkForWin()) {
                 //Here we reset SquareX object literal
                 squareX[i] = '';
-                console.log(squareX)
-                console.log(squareY)
+                console.log(squareX, "Checked for win")
+                console.log(squareY, "check for win")
                 //If player 'X' could win we set AI pick equal to X's winning pick
                 aiPick = i;
-                squareY[i] = 'O'
+                squareY[aiPick] = 'O'
                 squaresFilled++;
                 //We found the best value, let's end the loop early
                 i = 9;
@@ -41,13 +54,19 @@ function checkahead() {
             }
             //Here we reset SquareX object literal
             squareX[i] = '';
+            squareY[aiPick] = 'O'
             gameOver = false;
 
             console.log(squareX)
             console.log(squareY)
         }
+
     }
 
+
+}
+
+function checkaheadY() {
 
 }
 
@@ -56,7 +75,7 @@ function aiMove() {
     while (playerTurn != 'X') {
         //Ai has a random move until it's possible to win at 3+ turns
         if (squaresFilled >= 3) {
-            checkahead();
+            checkaheadX();
             document.getElementById(aiPick).innerHTML = turn;
             squaresFilled++;
             playerTurn = 'X';
@@ -90,7 +109,7 @@ function generatePick() {
 }
 
 function checkForWin() {
-    /*Eighteen possible ways to win. Also Holy if statements. We have two object literals that store 1-9 x or o values. 
+    /*Sixteen possible ways to win. Also Holy if statements. We have two object literals that store 1-9 x or o values. 
     Once three in a row feel in one of those objects we have a winner. Also page will refresh upon winning.*/
 
     if ((squareX[1] === 'X' && squareX[2] === 'X' && squareX[3] === 'X') || (squareY[1] === 'O' && squareY[2] === 'O' && squareY[3] === 'O')) {
@@ -119,10 +138,6 @@ function checkForWin() {
         return true;
     }
     if ((squareX[1] === 'X' && squareX[5] === 'X' && squareX[9] === 'X') || (squareY[1] === 'O' && squareY[5] === 'O' && squareY[9] === 'O')) {
-        gameOver = true;
-        return true;
-    }
-    if ((squareX[3] === 'X' && squareX[5] === 'X' && squareX[9] === 'X') || (squareY[3] === 'O' && squareY[5] === 'O' && squareY[9] === 'O')) {
         gameOver = true;
         return true;
     }
@@ -168,11 +183,23 @@ function setSelection(val) {
 function winner() {
     if (gameOver === true) {
         alert(prevTurn + " Is The Winner!")
+        if (prevTurn = 'X') {
+            xWon++;
+            localStorage.setItem('X', xWon);
+
+        }
+        else {
+            aiWon++;
+            localStorage.setItem('Y', aiWon);
+        }
         window.location.reload();
     }
     if (squaresFilled > 9) {
         alert("Draw")
+        draw++;
+        localStorage.setItem('draw', draw);
         window.location.reload();
+
     }
 }
 

@@ -24,6 +24,7 @@
     height: 1px;
     background-color: black;
     padding: 1%;
+    width: 100%;
     border: 2px solid silver;
 }
 .board {

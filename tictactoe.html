@@ -10,10 +10,14 @@
 </head>
 
 <body>
-    <hr class="line">
+
     <div id="container-fluid" class=" tictactoe">
+        <hr class="line">
         <div id="container-fluid" class="board">
             <h1 class="title"> Tic - Tac - Toe</h1>
+            <span>Draws: <p id="draw">0</p> </span>
+            <span>Player Wins: <p id="playerWins">0</p> </span>
+            <span>Computer Wins:<p id="computerWins"> 0 </p></span>
             <div class="row One">
                 <div class="square col-sm-4 col-md-4 col-lg-4">
                     <p id='1' onClick="setSelection(1)" class="selection">Click</p>
@@ -48,8 +52,9 @@
                 </div>
             </div>
         </div>
+        <hr class="line">
     </div>
-    <hr class="line">
+
 
 </body>
 <script src="tictactoe.js"></script>
