@@ -1,22 +1,11 @@
-body {
-    background-color: #EBEBEB;
-}
-h1 {
-    margin: auto;
-    width: 75%;
-    text-align: center;
-    
-}
+
 .square {
-    height: 100px;
+    height: 150px;
     border: 2px solid black;
     border-radius: 2%;  
-    background-color: #AA1111;
+    background-color: red;
     
 }
-
-
-
 .selection {
     margin-top: 10%;
     text-align: center;
@@ -24,8 +13,19 @@ h1 {
 }
 
 .tictactoe {
-    margin-left: 20%;
+    text-align: center;
+    font-family: 'Gothic A1', sans-serif;
+  
 }
-.container-fluid {
-    margin: 5%;
+.line { 
+    height: 1px;
+    background-color: black;
+    padding: 1%;
+    border: 2px solid silver;
+}
+.board {
+
+}
+.One {
+    margin-left: 20%;
 }
