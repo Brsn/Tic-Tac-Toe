@@ -6,6 +6,9 @@
     background-color: red;
     
 }
+.title {
+    font-weight: bolder;
+}
 .selection {
     margin-top: 10%;
     text-align: center;
