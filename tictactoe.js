@@ -8,12 +8,16 @@ let squaresFilled = 0;
 let playerTurn = 'X';
 let prevTurn = 'O';
 let aiPick = 0;
-let count = 1;
+let aiXPick = 0;
+let aiYPick = 0;
 let gameOver = false;
+var won = false;
+let bestYMove = 0;
+let bestXMove = 0;
 
 //set the local storage to a variable so we can increment also needed to parse strings.
 let xWon = parseInt(localStorage.getItem("X"));
-let aiWon = parseInt(localStorage.getItem("Y"));
+let oWon = parseInt(localStorage.getItem("O"));
 let draw = parseInt(localStorage.getItem("draw"));
 
 let squareX = {
@@ -25,82 +29,148 @@ let squareY = {
 
 
 document.getElementById("draw").innerHTML = localStorage.getItem("draw");
-document.getElementById("computerWins").innerHTML = localStorage.getItem("Y");
+document.getElementById("computerWins").innerHTML = localStorage.getItem("O");
 document.getElementById("playerWins").innerHTML = localStorage.getItem("X");
 
 console.log(localStorage);
 
 
 
-function checkaheadX() {
+function checkAheadX() {
+    bestXMove = 0;
+    //bestXMove will equal a game winning move
     for (let i = 1; i <= 9; i++) {
         if (document.getElementById(i).innerHTML === 'Click') {
             squareX[i] = 'X';
-            console.log(squareX)
-            console.log(squareY)
             //Test to see if SquareX object literal has numerical value already
             if (checkForWin()) {
-                //Here we reset SquareX object literal
+                bestXMove = i;
+                //We found a best move, let's store it.
                 squareX[i] = '';
-                console.log(squareX, "Checked for win")
-                console.log(squareY, "check for win")
-                //If player 'X' could win we set AI pick equal to X's winning pick
-                aiPick = i;
-                squareY[aiPick] = 'O'
-                squaresFilled++;
-                //We found the best value, let's end the loop early
-                i = 9;
-
+                //Here we reset SquareX object literal
+                gameOver = false;
             }
             //Here we reset SquareX object literal
             squareX[i] = '';
-            squareY[aiPick] = 'O'
-            gameOver = false;
-
-            console.log(squareX)
-            console.log(squareY)
+            // squareY[aiPick] = 'O' 
         }
-
     }
-
-
+    aiXPick = bestXMove;
+    //aiPick is now the best move(So we can use it)
+    console.log("bestXMove", bestXMove)
+    console.log(squareY)
+    console.log(squareX)
 }
+function checkAheadY(...squareY) {
+    let tempSquareY = squareY;
 
-function checkaheadY() {
-
-}
-
-function aiMove() {
-    let turn = playerTurn;
-    while (playerTurn != 'X') {
-        //Ai has a random move until it's possible to win at 3+ turns
-        if (squaresFilled >= 3) {
-            checkaheadX();
-            document.getElementById(aiPick).innerHTML = turn;
-            squaresFilled++;
-            playerTurn = 'X';
-            prevTurn = 'O';
-            checkForWin();
+    bestYMove = 0;
+    let loop = 0;
+    generatePick();
+    while (loop === 0) {
+        if (tempSquareY[aiPick] !== 'Click') {
+            generatePick();
         }
-        else if (squareX[aiPick] === '' && document.getElementById(aiPick).innerHTML === 'Click') {
-            //if the spot isn't already taken by player X we can use this
-            document.getElementById(aiPick).innerHTML = turn;
-            //places the ai pick
-            squareY[aiPick] = 'O';
-            //keeps track of the ai pick
-            squaresFilled++;
-            console.log(squaresFilled);
-            playerTurn = 'X';
-            prevTurn = 'O';
-            //Player X's turn again, but let's see if we won
-            checkForWin();
+        if (document.getElementById(aiPick).innerHTML === 'Click' && checkForWin()) {
+            tempSquareY[aiPick] = 'O';
+            //Test to see if SquareY object literal has numerical value already
+            bestYMove = aiYPick;
+            aiYPick = bestYMove;
+            //We found a best move, let's store it.
+            //squareY[i] = '';
+            //Here we reset squareY object literal
+            gameOver = false;
         }
         else {
-            //spots already taken by player X. So let's generate a new option
-            generatePick();
+            loop++;
+            //  tempSquareY[aiPick] = '';
+        }
+        console.log(squareY)
+        console.log(squareX)
+        console.log("bestYMove", bestYMove)
+    }
+    console.log("bestYMove", bestYMove)
+}
 
+
+
+
+
+
+
+function aiMove() {
+
+    let move = 0;
+    let turn = playerTurn;
+    console.log(turn);
+    console.log(aiPick, "From beginning");
+    while (playerTurn != 'X' && squaresFilled <= 8) {
+        checkAheadY();
+
+        console.log(squareY, "from the Y check aheads")
+        //if we find a Y winning value, lets use it  
+        checkAheadX();
+        //if we find an X winning value, lets use it
+        console.log(squareY, "from the X check aheads")
+        //Make sure it's O's turn and no infinite loop created by going if more than 8 squares
+        if (bestYMove > 0 && move === 0) {
+            aiYPick = bestYMove;
+            console.log(aiYPick, "From best move from Y");
+            if (document.getElementById(aiYPick).innerHTML === 'Click') {
+                document.getElementById(aiYPick).innerHTML = 'O';
+                squareY[aiYPick] = 'O';
+                squaresFilled++;
+                prevTurn = 'O';
+                playerTurn = 'X'
+                move++;
+                console.log("Squares filled", squaresFilled);
+                winner(checkForWin());
+            }
+            console.log(aiPick);
+        }
+        if (bestXMove > 0 && move === 0) {
+            aiXPick = bestXMove;
+            console.log(aiXPick, "From best move from X");
+            if (document.getElementById(aiXPick).innerHTML === 'Click') {
+                document.getElementById(aiXPick).innerHTML = 'O';
+                squareY[aiXPick] = 'O';
+                squaresFilled++;
+                prevTurn = 'O';
+                playerTurn = 'X'
+                move++;
+                console.log("Squares filled", squaresFilled);
+                winner(checkForWin());
+            }
+        }
+
+        //if we don't have a game winning pick, let's go back to random generating
+        else if (bestYMove === 0 && bestXMove === 0 && move === 0) {
+            generatePick()
+            console.log(aiPick, "From generate the pick")
+            //Ai has a random move until it's possible to win at 3+ turns
+            if (document.getElementById(aiPick).innerHTML === 'Click') {
+                document.getElementById(aiPick).innerHTML = 'O';
+                squareY[aiPick] = 'O';
+                squaresFilled++;
+                prevTurn = 'O';
+                playerTurn = 'X'
+                move++;
+                console.log("Squares filled", squaresFilled);
+                winner(checkForWin());
+            }
+        }
+        else {
+            //if we find an X winning value, lets use it
+            generatePick();
+            console.log(aiPick, "from the final else statement")
+            console.log(turn);
         }
     }
+    //reset the values at the end
+    bestYMove = 0;
+    bestXMove = 0;
+    console.log(squareY)
+    console.log(squareX)
 }
 
 function generatePick() {
@@ -168,13 +238,15 @@ function setSelection(val) {
     if (turn === 'X') {
         squareX[value] = 'X';
         if (document.getElementById(value).innerHTML === 'Click') {
-            document.getElementById(value).innerHTML = turn;
+            document.getElementById(value).innerHTML = 'X';
             squaresFilled++;
             console.log(squaresFilled);
             playerTurn = 'O';
             prevTurn = 'X';
-            checkForWin();
-            winner()
+            console.log(squareY)
+            console.log(squareX)
+            winner(checkForWin());
+            console.log("Squares filled", squaresFilled);
         }
         delayAi();
     }
@@ -183,25 +255,23 @@ function setSelection(val) {
 function winner() {
     if (gameOver === true) {
         alert(prevTurn + " Is The Winner!")
-        if (prevTurn = 'X') {
+        if (turn = 'X') {
             xWon++;
             localStorage.setItem('X', xWon);
+            window.location.reload();
+        }
+        if (turn = 'O') {
+            oWon++;
+            localStorage.setItem('O', oWon);
+            window.location.reload();
+        }
+        else if (squaresFilled === 9) {
+            alert("Draw")
+            draw++;
+            localStorage.setItem('draw', draw);
+            window.location.reload();
 
         }
-        else {
-            aiWon++;
-            localStorage.setItem('Y', aiWon);
-        }
-        window.location.reload();
-    }
-    if (squaresFilled > 9) {
-        alert("Draw")
-        draw++;
-        localStorage.setItem('draw', draw);
-        window.location.reload();
-
     }
 }
-
-
 
